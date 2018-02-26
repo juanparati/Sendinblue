@@ -28,7 +28,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Juanparati\\Sendinblue\\SendinblueServiceProvider"
+                "Juanparati\\Sendinblue\\ServiceProvider"
             ]
         }
     },
