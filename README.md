@@ -119,4 +119,17 @@ Like the the transactional template transport, it is also possible reset the sta
         });
         
 
+### API Client
+
+By default this library uses the official [Sendinblue PHP library](https://github.com/sendinblue/APIv3-php-library).
+
+In order to interact with the official library it is posible to inject the APIClient in the following way:
+
+        // Obtain APIClient
+        $api_client = app()->make(\Juanparati\Sendinblue\Client::class);
         
+        // Use the APIClient with the Sendinblue ContactsAPI
+        $contacts_api = new \SendinBlue\Client\Api\ContactsApi($api_client);
+        $folders = $contacts_api->getFolders();  
+
+See the [Sendinblue v3 APIs](https://github.com/sendinblue/APIv3-php-library) for more details.    
