@@ -133,7 +133,7 @@ class Transport extends MailTransport
 
         // Set ReplyTo
         if ($reply_to = $message->getReplyTo())
-            $mailer->setReplyTo(new SendSmtpEmailReplyTo(['email' => $reply_to]));
+            $mailer->setReplyTo(new SendSmtpEmailReplyTo(['email' => array_keys($reply_to)[0]]));
         else
         {
             // A Reply-to is always required.
@@ -142,12 +142,13 @@ class Transport extends MailTransport
 
 
         // Set content
-        $text_content = '';
+        $plain_text = '';
+        $html_text  = '';
 
         if ($message->getContentType() == 'text/plain')
-            $text_content = $message->getBody();
+            $plain_text = $message->getBody();
         else
-            $mailer->setHtmlContent($message->getBody());
+            $html_text  = $mailer->setHtmlContent($message->getBody());
 
 
         // Set mime parts
@@ -155,7 +156,7 @@ class Transport extends MailTransport
 
         foreach ($children as $child) {
             if ($child instanceof Swift_MimePart && $child->getContentType() == 'text/plain') {
-                $text_content = $child->getBody();
+                $plain_text = $child->getBody();
             }
         }
 
@@ -181,13 +182,13 @@ class Transport extends MailTransport
 
 
         // Sanitize and set text content
-        if (!empty($text_content)) {
+        if (!empty($plain_text)) {
 
             // Sendinblue v3 requires always a htmlcontent
-            $mailer->setHtmlContent($text_content);
+            $mailer->setHtmlContent(empty($html_text) ? $plain_text : $html_text->getHtmlContent());
 
-            $text_content = strip_tags($text_content);
-            $mailer->setTextContent($text_content);
+            $plain_text = strip_tags($plain_text);
+            $mailer->setTextContent($plain_text);
         }
 
 
