@@ -33,7 +33,7 @@ class ServiceProvider extends LaravelServiceProvider
         // Register Sendinblue API client
         $this->app->singleton(Client::class, function ($app)
         {
-            return (new Client($app['config']['services.sendinblue.v3']))->getApiClient();
+            return new Client($app['config']['services.sendinblue.v3']);
         });
 
         $this->app->alias(Client::class, class_basename(Client::class));

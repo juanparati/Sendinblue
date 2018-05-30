@@ -5,6 +5,8 @@ namespace Juanparati\Sendinblue;
 use Illuminate\Support\Traits\Macroable;
 
 use Juanparati\Sendinblue\Contracts\SMSTransport as SMSTransportContract;
+use Juanparati\Sendinblue\Exceptions\SMSException;
+use PHPUnit\Runner\Exception;
 
 
 /**
@@ -101,9 +103,19 @@ class SMS
      *
      * @param $sender
      * @return $this
+     * @throws SMSException
      */
     public function sender($sender)
     {
+        // Remove all kind of spaces.
+        $sender = preg_replace('/\s+/', '', $sender);
+
+        if (strlen($sender) > 11)
+            throw new SMSException('Sender name length is higher than 11 characters.');
+
+        if (preg_match('/[^a-zA-Z\d]/', $sender))
+            throw new SMSException('Sender name should contains only alphanumeric characters.');
+
         $this->model->sender = $sender;
 
         return $this;
