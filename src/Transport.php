@@ -11,8 +11,6 @@ use Swift_Attachment;
 use Swift_Mime_SimpleMessage;
 use Swift_MimePart;
 
-use SendinBlue\Client\ApiClient;
-use SendinBlue\Client\Api\SMTPApi;
 use SendinBlue\Client\Model\SendSmtpEmail;
 use SendinBlue\Client\Model\SendSmtpEmailAttachment;
 use SendinBlue\Client\Model\SendSmtpEmailBcc;
@@ -45,11 +43,11 @@ class Transport extends MailTransport
     /**
      * SendinBlueTransport constructor.
      *
-     * @param ApiClient $api_client
+     * @param Client $api_client
      */
-    public function __construct(ApiClient $api_client)
+    public function __construct(Client $api_client)
     {
-        $this->instance = new SMTPApi($api_client);
+        $this->instance = $api_client->getApi('SMTPApi');
     }
 
 
@@ -137,7 +135,7 @@ class Transport extends MailTransport
         else
         {
             // A Reply-to is always required.
-            $mailer->setReplyTo(new SendSmtpEmailReplyTo(['email' => array_keys($from)[0]]));
+            //$mailer->setReplyTo(new SendSmtpEmailReplyTo(['email' => array_keys($from)[0]]));
         }
 
 

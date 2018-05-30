@@ -7,9 +7,6 @@ use Illuminate\Support\Traits\Macroable;
 
 use Juanparati\Sendinblue\Contracts\TemplateTransport as TemplateTransportContract;
 
-use SendinBlue\Client\Api\SMTPApi;
-use SendinBlue\Client\ApiClient;
-
 
 /**
  * Class SendinblueTemplate.
@@ -59,12 +56,12 @@ class Template
     /**
      * SendinblueTemplate constructor.
      *
-     * @param ApiClient $api_client
+     * @param Client $api_client
      * @param TemplateTransportContract $transport
      */
-    public function __construct(ApiClient $api_client, TemplateTransportContract $transport)
+    public function __construct(Client $api_client, TemplateTransportContract $transport)
     {
-        $this->instance = new SMTPApi($api_client);
+        $this->instance  = $api_client->getApi('SMTPApi');
         $this->transport = $transport;
 
         $this->reset();
@@ -87,11 +84,12 @@ class Template
     /**
      * Send the message using the given mailer.
      *
-     * @param int             $template_id
+     * @param int $template_id
      * @param \Closure|string $callable
-     * @return int
+     * @return string The Message ID
+     * @throws Exceptions\TransportException
      */
-    public function send($template_id, $callable = null)
+    public function send($template_id, $callable = null) : string
     {
         if (is_callable($callable))
         {
@@ -375,6 +373,20 @@ class Template
     public function attributes(array $attributes)
     {
         $this->model->attributes = $this->model->attributes + $attributes;
+
+        return $this;
+    }
+
+
+    /**
+     * Add tag(s).
+     *
+     * @param mixed ...$tag
+     * @return $this
+     */
+    public function tag(...$tag)
+    {
+        $this->model->tags = array_merge($this->model->tags, $tag);
 
         return $this;
     }
