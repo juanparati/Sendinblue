@@ -85,6 +85,14 @@ final class TemplateModel
 
 
     /**
+     * Tags.
+     *
+     * @var array
+     */
+    public $tags = [];
+
+
+    /**
      * The callbacks for the message.
      *
      * @var array

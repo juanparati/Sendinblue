@@ -5,14 +5,16 @@ namespace Juanparati\Sendinblue;
 
 use Illuminate\Support\Facades\Log;
 
-use SendinBlue\Client\Api\SMTPApi;
-use SendinBlue\Client\ApiClient;
-use SendinBlue\Client\Model\SendEmail;
-use SendinBlue\Client\Model\SendEmailAttachment;
+use SendinBlue\Client\Model\SendSmtpEmail;
+use SendinBlue\Client\Model\SendSmtpEmailAttachment;
+use SendinBlue\Client\Model\SendSmtpEmailBcc;
+use SendinBlue\Client\Model\SendSmtpEmailCc;
+use SendinBlue\Client\Model\SendSmtpEmailReplyTo;
+use SendinBlue\Client\Model\SendSmtpEmailSender;
+use SendinBlue\Client\Model\SendSmtpEmailTo;
 
 use Juanparati\Sendinblue\Exceptions\TransportException;
 use Juanparati\Sendinblue\Contracts\TemplateTransport as SendinblueTemplateTransportContract;
-
 
 
 /**
@@ -35,11 +37,11 @@ class TemplateTransport implements SendinblueTemplateTransportContract
     /**
      * SendinblueTemplateTransport constructor.
      *
-     * @param ApiClient $api_client
+     * @param Client $api_client
      */
-    public function __construct(ApiClient $api_client)
+    public function __construct(Client $api_client)
     {
-        $this->instance = new SMTPApi($api_client);
+        $this->instance = $api_client->getApi('SMTPApi');
     }
 
 
@@ -47,23 +49,24 @@ class TemplateTransport implements SendinblueTemplateTransportContract
      * Send the message using the given mailer.
      *
      * @param  int $template_id
+     * @param Template $message
      * @return string Message ID
      * @throws TransportException
      */
-    public function send($template_id, Template $message) : string
+    public function send(int $template_id, Template $message) : string
     {
 
         $data = $this->mapMessage($message->getModel());
+        $data->setTemplateId($template_id);
 
         try
         {
-            $response = $this->instance->sendTemplate($template_id, $data);
+            $response = $this->instance->sendTransacEmail($data);
         }
         catch (\Exception $e)
         {
             throw new TransportException($e->getMessage());
         }
-
 
         $message_id = $response->getMessageId();
 
@@ -82,34 +85,35 @@ class TemplateTransport implements SendinblueTemplateTransportContract
      * Transforms Swift_Message into SendinBlue SendSmtpEmail.
      *
      * @param TemplateModel $message
-     * @return SendEmail
+     * @return SendSmtpEmail
      * @throws TransportException
      */
     protected function mapMessage(TemplateModel $message)
     {
 
-        $mailer = new SendEmail();
+        $mailer = new SendSmtpEmail();
 
-        // Set receivers
         if ($message->to)
-            $mailer->setEmailTo(collect($message->to)->pluck('address')->all());
+            $mailer->setTo(static::collectEmailNamePair($message->to, SendSmtpEmailTo::class));
         else
             throw new TransportException('Destination (To) recipient is required', 100);
 
+        if ($message->from)
+            $mailer->setSender(new SendSmtpEmailSender(['email' => $message->from['address'], 'name' => $message->from['name']]));
 
         // Set CC
         if ($message->cc)
-            $mailer->setEmailCc(collect($message->cc)->pluck('address')->all());
+            $mailer->setCc(static::collectEmailNamePair($message->cc, SendSmtpEmailCc::class));
 
 
         // Set BCC
         if ($message->bcc)
-            $mailer->setEmailBcc(collect($message->bcc)->pluck('address')->all());
+            $mailer->setBcc(static::collectEmailNamePair($message->cc, SendSmtpEmailBcc::class));
 
 
         // Set ReplyTo
         if ($message->replyTo)
-            $mailer->setReplyTo(collect($message->replyTo)->pluck('address')->first());
+            $mailer->setReplyTo(new SendSmtpEmailReplyTo(['email' => $message->replyTo['address'], 'name' => $message->replyTo['name']]));
 
 
         // Add attachments
@@ -126,23 +130,44 @@ class TemplateTransport implements SendinblueTemplateTransportContract
                 throw new TransportException('File extension not allowed for ' . $filename, 101);
 
             $content = chunk_split(base64_encode(file_get_contents($filepath)));
-            $attachment[] = new SendEmailAttachment(['content' => $content, 'name' => $filename]);
+            $attachment[] = new SendSmtpEmailAttachment(['content' => $content, 'name' => $filename]);
         }
-
-        if (count($attachment))
-            $mailer->setAttachment($attachment);
 
 
         // Add URL attachments
         foreach ($message->attachmentsURL as $attachmentURL)
-            $mailer->setAttachmentUrl($attachmentURL);
+            $attachment[] = new SendSmtpEmailAttachment(['url' => $attachmentURL]);
+
+
+        // Enclose all the attachments
+        if (count($attachment))
+            $mailer->setAttachment($attachment);
 
 
         // Set attributes
         if ($message->attributes)
-            $mailer->setAttributes($message->attributes);
+            $mailer->setParams($message->attributes);
+
 
         return $mailer;
+    }
+
+
+    /**
+     * Convert address pair into SendinBlue models.
+     *
+     * @param array $source
+     * @param string $type
+     * @return array
+     */
+    public static function collectEmailNamePair(array $source, string $type) : array
+    {
+        $values = [];
+
+        foreach ($source as $address)
+            $values[] = new $type(['name' => $address['name'], 'email' => $address['address']]);
+
+        return $values;
     }
 
 

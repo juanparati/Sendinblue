@@ -1,8 +1,9 @@
 <?php
 namespace Juanparati\Sendinblue\Contracts;
 
+use Juanparati\Sendinblue\Client;
 use Juanparati\Sendinblue\SMS;
-use SendinBlue\Client\ApiClient;
+
 
 interface SMSTransport
 {
@@ -10,9 +11,9 @@ interface SMSTransport
     /**
      * SendinblueSMSTransport constructor.
      *
-     * @param ApiClient $api_client
+     * @param Client $api_client
      */
-    public function __construct(ApiClient $api_client);
+    public function __construct(Client $api_client);
 
 
     /**
