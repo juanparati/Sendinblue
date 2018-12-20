@@ -258,14 +258,28 @@ class Template
      */
     protected function setAddress($address, $name = null, $property = 'to')
     {
-        foreach ($this->addressesToArray($address, $name) as $recipient) {
-            $recipient = $this->normalizeRecipient($recipient);
 
-            $this->model->{$property}[] = [
-                'name' => $recipient->name ?? null,
-                'address' => $recipient->email,
-            ];
-        }
+    	if ($property === 'replyTo') {
+
+			$this->model->{$property} = [
+				'name'    => $name ?? null,
+				'address' => $address,
+			];
+
+			return $this;
+		}
+
+
+		foreach ($this->addressesToArray($address, $name) as $recipient)
+		{
+			$recipient = $this->normalizeRecipient($recipient);
+
+			$this->model->{$property}[] = [
+				'name'    => $recipient->name ?? null,
+				'address' => $recipient->email,
+			];
+
+		}
 
         return $this;
     }
