@@ -31,6 +31,7 @@ class AttachExt
         'mobi' ,
         'msg'  ,
         'ods'  ,
+		'odt'  ,
         'pdf'  ,
         'png'  ,
         'ppt'  ,
