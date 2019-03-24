@@ -9,7 +9,7 @@
         "email"
     ],
     "require": {
-        "illuminate/mail": "5.5.*|5.6.*|5.7.*",
+        "illuminate/mail": "5.5.*|5.6.*|5.7.*|5.8.*",
         "sendinblue/api-v3-sdk": "~6.0.3"
     },
     "require-dev": {
