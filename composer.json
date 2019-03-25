@@ -1,5 +1,5 @@
 {
-    "name": "juanparati/sendinblue",
+    "name": "tmishutin/Sendinblue",
     "description": "A Sendinblue v3 interface provider for Laravel 5.5+",
     "type": "library",
     "keywords": [
