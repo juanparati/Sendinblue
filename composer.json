@@ -1,5 +1,5 @@
 {
-    "name": "tmishutin/Sendinblue",
+    "name": "juanparati/Sendinblue",
     "description": "A Sendinblue v3 interface provider for Laravel 5.5+",
     "type": "library",
     "keywords": [
@@ -17,18 +17,18 @@
     },
     "autoload": {
         "psr-4": {
-            "tmishutin\\Sendinblue\\": "src"
+            "juanparati\\Sendinblue\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "tmishutin\\Sendinblue\\Test\\": "tests/"
+            "juanparati\\Sendinblue\\Test\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "tmishutin\\Sendinblue\\ServiceProvider"
+                "juanparati\\Sendinblue\\ServiceProvider"
             ]
         }
     },
