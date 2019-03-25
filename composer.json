@@ -17,18 +17,18 @@
     },
     "autoload": {
         "psr-4": {
-            "Juanparati\\Sendinblue\\": "src"
+            "tmishutin\\Sendinblue\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Juanparati\\Sendinblue\\Test\\": "tests/"
+            "tmishutin\\Sendinblue\\Test\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Juanparati\\Sendinblue\\ServiceProvider"
+                "tmishutin\\Sendinblue\\ServiceProvider"
             ]
         }
     },
