@@ -153,3 +153,8 @@ In order to interact with the official library it is posible to inject the custo
         $folders = $contacts_api->getFolders(10, 0);  
 
 See the [Sendinblue v3 APIs](https://github.com/sendinblue/APIv3-php-library) for more details.    
+
+
+### Supported by
+
+This project was made possible by [Matchbanker.no](https://matchbanker.no/).
