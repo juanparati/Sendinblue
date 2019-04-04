@@ -69,7 +69,7 @@ Now it is possible to send templates in the following way:
         MailTemplate::cc('user2@example.net');          // CC
         MailTemplate::bcc('user3@example.net');         // BCC
         MailTemplate::replyTo('boss@example.net');      // ReplyTo
-        MailTemplate::attribute('name', 'Mr User');     // Replace %NAME% placeholder into the template 
+        MailTemplate::attribute('NAME', 'Mr User');     // Replace %NAME% placeholder into the template 
         MailTemplate::attach('file.txt');               // Attach file
         MailTemplate::attachURL('http://www.example.com/file.txt'); // Attach file from URL
         MailTemplate::send(100);                        // Send template ID 100 and return message ID in case of success
@@ -78,7 +78,7 @@ It is possible the reset the template message using the "reset" method:
 
         MailTemplate::to('user@example.net');           // Recipient
         MailTemplate::cc('user5@example.net');          // Second recipient
-        MailTemplate::attribute('type', 'Invoice');     // Replace %TYPE% placeholder
+        MailTemplate::attribute('TYPE', 'Invoice');     // Replace %TYPE% placeholder
         MailTemplate::send(100);                        // Send template
         
         MailTemplate::to('user2@example.net');          // Another recipient
