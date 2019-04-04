@@ -157,4 +157,4 @@ See the [Sendinblue v3 APIs](https://github.com/sendinblue/APIv3-php-library) fo
 
 ### Supported by
 
-This project was made possible by <a href="https://matchbanker.no/" rel="dofollow">Matchbanker.no.
+This project was made possible by [Matchbanker.no](https://matchbanker.no/).
