@@ -152,6 +152,21 @@ In order to interact with the official library it is posible to inject the custo
         // Retrieve the first 10 folders
         $folders = $contacts_api->getFolders(10, 0);  
 
+Another example using Sendinblue models:
+
+        $apiClient = app()->make(\Juanparati\Sendinblue\Client::class);
+        $contactsApi = $apiClient->getApi('ContactsApi');
+
+        // Use CreateContact model
+        $contact = $apiClient->getModel('CreateContact', ['email' => 'test@example.net', 'attributes' => ['TYPE' => 4, 'NOM' => 'test', 'PRENOM' => 'test'], 'listIds' => [22]]);
+
+        try {
+                $contactsApi->createContact($contact);
+        }
+        catch(\Exception $e){
+                dd($e->getMessage());
+        }
+
 See the [Sendinblue v3 APIs](https://github.com/sendinblue/APIv3-php-library) for more details.    
 
 
