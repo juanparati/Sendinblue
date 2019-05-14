@@ -58,6 +58,17 @@ class Client
         $api = 'SendinBlue\\Client\\Api\\' . $api;
         return new $api($this->client, $this->config);
     }
+    
+    /**
+     * Return the Model.
+     *
+     * @return array
+     */
+    public function getModel($model, $data = [])
+    {
+        $api = 'SendinBlue\\Client\\Model\\' . $model;
+        return new $api($data);
+    }
 
 
     /**
