@@ -69,7 +69,7 @@ class SMSTransport implements SendinblueSMSTransportContract
             throw new TransportException('Unable to send SMS, due to unknown error');
 
 
-        Log::debug('Sent Sendinblue SMS', ['messageId' => $message_id]);
+        // Log::debug('Sent Sendinblue SMS', ['messageId' => $message_id]);
 
 
         return $message_id;

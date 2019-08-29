@@ -79,7 +79,7 @@ class Transport extends MailTransport
             throw new TransportException('Unable to send e-mail, due to unknown error');
 
 
-        Log::debug('Sent Sendinblue message', ['messageId' => $response->getMessageId()]);
+        // Log::debug('Sent Sendinblue message', ['messageId' => $response->getMessageId()]);
 
 
         return 1;

@@ -74,7 +74,7 @@ class TemplateTransport implements SendinblueTemplateTransportContract
             throw new TransportException('Unable to send e-mail template, due to unknown error');
 
 
-        Log::debug('Sent Sendinblue template message', ['messageId' => $message_id]);
+        // Log::debug('Sent Sendinblue template message', ['messageId' => $message_id]);
 
 
         return $message_id;
