@@ -11,13 +11,20 @@ A Laravel package that provides transactional features like:
 
 ## Installation
 
+For Laravel 5.5 to 5.8:
+
+        composer require juanparati/sendinblue "^2.4"
+        
+For Laravel 6.x:
+
         composer require juanparati/sendinblue
 
-For Laravel 5.5 it is required to register the service provider into the "config/app.php":
+
+For Laravel 5.5/6 it is required to register the service provider into the "config/app.php":
 
         Juanparati\Sendinblue\ServiceProvider::class,
 
-For Laravel 5.6+ the service provider is automatically registered.
+For Laravel 5.6+/6 the service provider is automatically registered.
 
 ## <a name="setup-native-mail-transport"></a> Setup native mail transport
 
