@@ -20,7 +20,7 @@ For Laravel 6.x:
         composer require juanparati/sendinblue
 
 
-For Laravel 5.5/6 it is required to register the service provider into the "config/app.php":
+For Laravel 5.5 and below it's required to register the service provider into the "config/app.php":
 
         Juanparati\Sendinblue\ServiceProvider::class,
 
