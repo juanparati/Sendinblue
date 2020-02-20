@@ -259,7 +259,7 @@ class Template
     protected function setAddress($address, $name = null, $property = 'to')
     {
 
-    	if ($property === 'replyTo') {
+    	if ($property === 'replyTo' || $property === 'from') {
 
 			$this->model->{$property} = [
 				'name'    => $name ?? null,
