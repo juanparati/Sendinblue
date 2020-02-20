@@ -95,7 +95,7 @@ class Template
         {
             $instance = app()->make(static::class);
             call_user_func($callable, $instance);
-            $instance->send($template_id);
+            return $instance->send($template_id);
         }
         else
             return $this->transport->send($template_id, $this);
