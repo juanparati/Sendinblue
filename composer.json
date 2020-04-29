@@ -1,6 +1,6 @@
 {
     "name": "juanparati/sendinblue",
-    "description": "A Sendinblue v3 interface provider for Laravel 5.5+/6.x",
+    "description": "A Sendinblue v3 interface provider for Laravel 5.5+/6.x/7.x",
     "type": "library",
     "keywords": [
         "Sendinblue",
@@ -10,7 +10,7 @@
     ],
     "require": {
         "php": ">=7.2",
-        "illuminate/mail": "6.*",
+        "illuminate/mail": "^6|^7",
         "sendinblue/api-v3-sdk": "~6.1.4"
     },
     "require-dev": {

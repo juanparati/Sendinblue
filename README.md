@@ -15,7 +15,7 @@ For Laravel 5.5 to 5.8:
 
         composer require juanparati/sendinblue "^2.4"
         
-For Laravel 6.x:
+For Laravel 6.x/7.x:
 
         composer require juanparati/sendinblue
 
@@ -24,7 +24,7 @@ For Laravel 5.5 and below it's required to register the service provider into th
 
         Juanparati\Sendinblue\ServiceProvider::class,
 
-For Laravel 5.6+/6 the service provider is automatically registered.
+For Laravel 5.6+/6/7 the service provider is automatically registered.
 
 ## <a name="setup-native-mail-transport"></a> Setup native mail transport
 
