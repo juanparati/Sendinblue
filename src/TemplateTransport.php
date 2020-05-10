@@ -108,7 +108,7 @@ class TemplateTransport implements SendinblueTemplateTransportContract
 
         // Set BCC
         if ($message->bcc)
-            $mailer->setBcc(static::collectEmailNamePair($message->cc, SendSmtpEmailBcc::class));
+            $mailer->setBcc(static::collectEmailNamePair($message->bcc, SendSmtpEmailBcc::class));
 
 
         // Set ReplyTo
