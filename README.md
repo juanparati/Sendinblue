@@ -11,13 +11,20 @@ A Laravel package that provides transactional features like:
 
 ## Installation
 
+For Laravel 7.x:
+
+        composer require juanparati/sendinblue
+
+
+For Laravel 6.x:
+
+        composer require juanparati/sendinblue "^3.0"
+
+
 For Laravel 5.5 to 5.8:
 
         composer require juanparati/sendinblue "^2.4"
         
-For Laravel 6.x/7.x:
-
-        composer require juanparati/sendinblue
 
 
 For Laravel 5.5 and below it's required to register the service provider into the "config/app.php":
@@ -26,7 +33,8 @@ For Laravel 5.5 and below it's required to register the service provider into th
 
 For Laravel 5.6+/6/7 the service provider is automatically registered.
 
-## <a name="setup-native-mail-transport"></a> Setup native mail transport
+
+## <a name="setup-native-mail-transport"></a> Setup native mail transport in Laravel 7
 
 1. Add the following configuration snippet into the "config/services.php" file
 
@@ -36,7 +44,31 @@ For Laravel 5.6+/6/7 the service provider is automatically registered.
                 ]
          ],
 
-2. Change the mail driver to "sendinblue.v3" into the "config/mail.php" file or the ".env" file. Example:
+2. Change the mail driver to "sendinblue.v3" into the "config/mail.php" file or the ".env" file (Remember that ".env" values will overwrite the config values). Example:
+        
+         'driver' => env('MAIL_MAILER', 'sendinblue'),
+
+         'mailers' => [
+                 // ...
+                 'sendinblue' => [
+                        'transport' => 'sendinblue.v3'
+                 ]
+                 // ...
+         ];
+        
+
+
+## <a name="setup-native-mail-transport"></a> Setup native mail transport in Laravel 5.6+/6
+
+1. Add the following configuration snippet into the "config/services.php" file
+
+         'sendinblue' => [        
+                'v3'    => [
+                    'key'   => '[your v3 api key]'                    
+                ]
+         ],
+
+2. Change the mail driver to "sendinblue.v3" into the "config/mail.php" file or the ".env" (Remember that ".env" values will overwrite the config values) file. Example:
         
          'driver' => env('MAIL_DRIVER', 'sendinblue.v3'),
          
@@ -47,9 +79,8 @@ For Laravel 5.6+/6/7 the service provider is automatically registered.
 
 ### Transactional mail transport
 
-Just use the transactional e-mails using the [Laravel Mail facade](https://laravel.com/docs/5.6/mail#sending-mail).
+Just use the transactional e-mails using the [Laravel Mail facade](https://laravel.com/docs/7.x/mail#sending-mail).
 
-Remember to [setup the native mail transport](#setup-native-mail-transport) if you want to use Sendinblue as Laravel mail transport.
 
 As soon that Sendinblue was configured as native mail transport you can use the following code in order to test it:
 
@@ -66,11 +97,11 @@ As soon that Sendinblue was configured as native mail transport you can use the 
 
 The transactional mail template transport allow to send templates as transactional e-mails using Sendinblue.
 
-It is possible to register the mail template transport facade into the "config/app.php":
+It's possible to register the mail template transport facade into the "config/app.php":
 
          'MailTemplate' => Juanparati\Sendinblue\Facades\Template::class,
 
-Now it is possible to send templates in the following way:
+Now it's possible to send templates in the following way:
 
         MailTemplate::to('user@example.net');           // Recipient
         MailTemplate::cc('user2@example.net');          // CC
@@ -81,7 +112,7 @@ Now it is possible to send templates in the following way:
         MailTemplate::attachURL('http://www.example.com/file.txt'); // Attach file from URL
         MailTemplate::send(100);                        // Send template ID 100 and return message ID in case of success
 
-It is possible the reset the template message using the "reset" method:
+It's possible the reset the template message using the "reset" method:
 
         MailTemplate::to('user@example.net');           // Recipient
         MailTemplate::cc('user5@example.net');          // Second recipient
@@ -97,7 +128,7 @@ It is possible the reset the template message using the "reset" method:
         MailTemplate::send(100);                        // Send template but previous attribute and second recipient is not used.
                 
 
-In is also possible enclose the mail message into a closure so it is not necessary to reset the message state using the "reset" method:
+It's also possible enclose the mail message into a closure so the call to the "reset" method is not neccesary:
 
         MailTemplate::send(100, function ($message) {
             $message->to('user2@example.net');
@@ -113,7 +144,7 @@ In is also possible enclose the mail message into a closure so it is not necessa
 
 The transactional SMS allow to send SMS using the Sendinblue SMS transport.
 
-It is possible to register the SMS transport facade into the "config/app.php":
+I's possible to register the SMS transport facade into the "config/app.php":
 
         'SMS' => Juanparati\Sendinblue\Facades\SMS::class,
 
