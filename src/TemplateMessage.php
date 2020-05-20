@@ -8,6 +8,18 @@ namespace Juanparati\Sendinblue;
  * TemplateMessage is a wrapper for Laravel notifications messages
  *
  * @package Juanparati\Sendinblue
+ *
+ * @method $this from($address, $name = null)
+ * @method $this to($address, $name = null)
+ * @method $this cc($address, $name = null)
+ * @method $this bcc($address, $name = null)
+ * @method $this replyTo($address, $name = null)
+ * @method $this setAddress($address, $name = null, $property = 'to')
+ * @method $this attach($file, array $options = [])
+ * @method $this tag(...$tag)
+ * @method $this attachURL($file)
+ * @method $this attribute($name, $value)
+ * @method $this attributes(array $attributes)
  */
 class TemplateMessage
 {
