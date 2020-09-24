@@ -5,6 +5,11 @@ namespace Juanparati\Sendinblue;
 use Illuminate\Mail\MailManager;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
+/**
+ * Class ServiceProvider.
+ *
+ * @package Juanparati\Sendinblue
+ */
 class ServiceProvider extends LaravelServiceProvider
 {
 
@@ -55,7 +60,6 @@ class ServiceProvider extends LaravelServiceProvider
         });
 
         $this->app->alias(SMS::class, 'Sendinblue' . class_basename(SMS::class));
-
 
     }
 }

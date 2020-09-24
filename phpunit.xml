@@ -8,11 +8,14 @@
          convertWarningsToExceptions="true"
          processIsolation="false"
          stopOnFailure="false"
-         syntaxCheck="false"
 >
     <testsuites>
         <testsuite name="Package Test Suite">
-            <directory suffix=".php">./tests/</directory>
+            <directory suffix=".php">./tests/test</directory>
         </testsuite>
     </testsuites>
+    <php>
+        <env name="SENDINBLUE_API_KEY" value="fakeApiKey" force="true" />
+        <env name="SINK_RECIPIENT" value="fakeApiKey" force="true" />
+    </php>
 </phpunit>
