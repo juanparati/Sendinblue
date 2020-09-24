@@ -11,9 +11,13 @@ A Laravel package that provides transactional features like:
 
 ## Installation
 
+For Laravel 8.x
+
+        composer require juanparati/sendinblue "^8.0"
+
 For Laravel 7.x:
 
-        composer require juanparati/sendinblue
+        composer require juanparati/sendinblue "^4.0"
 
 
 For Laravel 6.x:
@@ -31,7 +35,7 @@ For Laravel 5.5 and below it's required to register the service provider into th
 
         Juanparati\Sendinblue\ServiceProvider::class,
 
-For Laravel 5.6+/6/7 the service provider is automatically registered.
+For Laravel 5.6+ the service provider is automatically registered.
 
 
 ## <a name="setup-native-mail-transport"></a> Setup native mail transport in Laravel 7
@@ -58,7 +62,7 @@ For Laravel 5.6+/6/7 the service provider is automatically registered.
         
 
 
-## <a name="setup-native-mail-transport"></a> Setup native mail transport in Laravel 5.6+/6
+## <a name="setup-native-mail-transport"></a> Setup native mail transport in Laravel 5.6+
 
 1. Add the following configuration snippet into the "config/services.php" file
 
@@ -79,7 +83,7 @@ For Laravel 5.6+/6/7 the service provider is automatically registered.
 
 ### Transactional mail transport
 
-Just use the transactional e-mails using the [Laravel Mail facade](https://laravel.com/docs/7.x/mail#sending-mail).
+Just use the transactional e-mails using the [Laravel Mail facade](https://laravel.com/docs/8.x/mail#sending-mail).
 
 
 As soon that Sendinblue was configured as native mail transport you can use the following code in order to test it:
