@@ -38,7 +38,7 @@ For Laravel 5.5 and below it's required to register the service provider into th
 For Laravel 5.6+ the service provider is automatically registered.
 
 
-## <a name="setup-native-mail-transport"></a> Setup native mail transport in Laravel 7
+## <a name="setup-native-mail-transport"></a> Setup native mail transport in Laravel 7+
 
 1. Add the following configuration snippet into the "config/services.php" file
 
@@ -62,7 +62,7 @@ For Laravel 5.6+ the service provider is automatically registered.
         
 
 
-## <a name="setup-native-mail-transport"></a> Setup native mail transport in Laravel 5.6+
+## <a name="setup-native-mail-transport"></a> Setup native mail transport in Laravel 5.x/6
 
 1. Add the following configuration snippet into the "config/services.php" file
 
