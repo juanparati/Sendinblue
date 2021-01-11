@@ -2,14 +2,9 @@
 
 namespace Juanparati\Sendinblue;
 
-use Illuminate\Mail\MailManager;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
-/**
- * Class ServiceProvider.
- *
- * @package Juanparati\Sendinblue
- */
+
 class ServiceProvider extends LaravelServiceProvider
 {
 
@@ -21,8 +16,8 @@ class ServiceProvider extends LaravelServiceProvider
     public function boot()
     {
         // Boot as swift transport
-        $this->app[MailManager::class]->extend('sendinblue.v3', function ($app) {
-            return new Transport($this->app->make(Client::class));
+        $this->app['swift.transport']->extend('sendinblue.v3', function ($app) {
+            return new Transport($app[Client::class]);
         });
     }
 
@@ -60,6 +55,7 @@ class ServiceProvider extends LaravelServiceProvider
         });
 
         $this->app->alias(SMS::class, 'Sendinblue' . class_basename(SMS::class));
+
 
     }
 }

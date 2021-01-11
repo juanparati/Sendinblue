@@ -35,7 +35,7 @@ class Transport extends MailTransport
     /**
      * SendinBlue SMTP instance.
      *
-     * @var \SendinBlue\Client\Api\TransactionalEmailsApi
+     * @var \SendinBlue\Client\Api\SMTPApi
      */
     protected $instance;
 
@@ -47,7 +47,7 @@ class Transport extends MailTransport
      */
     public function __construct(Client $api_client)
     {
-        $this->instance = $api_client->getApi('TransactionalEmailsApi');
+        $this->instance = $api_client->getApi('SMTPApi');
     }
 
 

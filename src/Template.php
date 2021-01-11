@@ -40,7 +40,7 @@ class Template
     /**
      * SendinBlue SMTP instance.
      *
-     * @var \SendinBlue\Client\Api\TransactionalEmailsApi
+     * @var \SendinBlue\Client\Api\SMTPApi
      */
     protected $instance;
 
@@ -61,7 +61,7 @@ class Template
      */
     public function __construct(Client $api_client, TemplateTransportContract $transport)
     {
-        $this->instance  = $api_client->getApi('TransactionalEmailsApi');
+        $this->instance  = $api_client->getApi('SMTPApi');
         $this->transport = $transport;
 
         $this->reset();
