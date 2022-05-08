@@ -28,7 +28,7 @@ class SendinblueProvider extends LaravelServiceProvider
     public function boot(): void
     {
         Mail::extend('sendinblue.v3', function () {
-            return (new SendinblueTransportFactory)->create(
+            return (new SendinblueTransportFactory())->create(
                 new Dsn(
                     'sendinblue+api',
                     'default',

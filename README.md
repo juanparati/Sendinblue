@@ -11,25 +11,26 @@ A Laravel package that provides transactional features like:
 
 ## Installation
 
+For Laravel 9.x
+
+      composer require juanparati/sendinblue "^9.0"
+
 For Laravel 8.x
 
-        composer require juanparati/sendinblue "^8.0"
+      composer require juanparati/sendinblue "^8.0"
 
 For Laravel 7.x:
 
-        composer require juanparati/sendinblue "^4.0"
+      composer require juanparati/sendinblue "^4.0"
 
 
 For Laravel 6.x:
 
-        composer require juanparati/sendinblue "^3.0"
-
+      composer require juanparati/sendinblue "^3.0"
 
 For Laravel 5.5 to 5.8:
 
-        composer require juanparati/sendinblue "^2.4"
-        
-
+      composer require juanparati/sendinblue "^2.4"
 
 For Laravel 5.5 and below it's required to register the service provider into the "config/app.php":
 
@@ -59,10 +60,17 @@ For Laravel 5.6+ the service provider is automatically registered.
                  ]
                  // ...
          ];
-        
+
+3. Add the following configuration snippet into the "config/services.php" file
+
+         'sendinblue' => [        
+                'v3'    => [
+                    'key'   => '[your v3 api key]'                    
+                ]
+         ],
 
 
-## <a name="setup-native-mail-transport"></a> Setup native mail transport in Laravel 5.x/6
+## <a name="setup-native-mail-transport"></a> Setup native mail transport in Laravel 5.x/6.x
 
 1. Add the following configuration snippet into the "config/services.php" file
 
