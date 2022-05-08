@@ -1,9 +1,14 @@
 <?php
 
-namespace Juanparati\Sendinblue;
+namespace Juanparati\Sendinblue\Providers;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use Juanparati\Sendinblue\Client;
+use Juanparati\Sendinblue\SMS;
+use Juanparati\Sendinblue\SMSTransport;
+use Juanparati\Sendinblue\Template;
+use Juanparati\Sendinblue\TemplateTransport;
 use Symfony\Component\Mailer\Bridge\Sendinblue\Transport\SendinblueTransportFactory;
 use Symfony\Component\Mailer\Transport\Dsn;
 
@@ -12,7 +17,7 @@ use Symfony\Component\Mailer\Transport\Dsn;
  *
  * @package Juanparati\Sendinblue
  */
-class ServiceProvider extends LaravelServiceProvider
+class SendinblueProvider extends LaravelServiceProvider
 {
 
     /**
