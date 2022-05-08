@@ -74,4 +74,12 @@ class SendinblueProvider extends LaravelServiceProvider
         $this->app->alias(SMS::class, 'Sendinblue' . class_basename(SMS::class));
 
     }
+
+    /**
+     * @return array
+     */
+    public function provides(): array
+    {
+        return ['sendinblue.v3'];
+    }
 }
