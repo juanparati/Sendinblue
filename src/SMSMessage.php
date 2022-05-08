@@ -17,13 +17,14 @@ class SMSMessage
      *
      * @var SMS
      */
-    protected $instance;
+    protected SMS $instance;
 
 
     /**
      * TemplateMessage constructor.
      *
-     * @param int $template_id
+     * @param string $content
+     * @param string $type
      */
     public function __construct(string $content, string $type = 'transactional')
     {

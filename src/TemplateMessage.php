@@ -29,7 +29,7 @@ class TemplateMessage
      *
      * @var Template
      */
-    protected $instance;
+    protected Template $instance;
 
 
     /**
@@ -37,7 +37,7 @@ class TemplateMessage
      *
      * @var int
      */
-    protected $template_id;
+    protected int $template_id;
 
 
     /**

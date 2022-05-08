@@ -15,11 +15,11 @@ final class SMSModel
     /**
      * Name of the sender.
      *
-     * Only alphanumeric characters. No more than 11 characters.
+     * Only alphanumeric characters. No more than 15 numbers or 11 characters.
      *
-     * @var string
+     * @var string|int
      */
-    public $sender;
+    public string|int $sender;
 
 
     /**
@@ -27,7 +27,7 @@ final class SMSModel
      *
      * @var string
      */
-    public $recipient;
+    public string $recipient;
 
 
     /**
@@ -37,7 +37,7 @@ final class SMSModel
      *
      * @var string
      */
-    public $content;
+    public string $content;
 
 
     /**
@@ -45,7 +45,7 @@ final class SMSModel
      *
      * @var string
      */
-    public $type;
+    public string $type;
 
 
     /**
@@ -53,7 +53,7 @@ final class SMSModel
      *
      * @var string
      */
-    public $tag;
+    public string $tag;
 
 
     /**
@@ -61,6 +61,6 @@ final class SMSModel
      *
      * @var string
      */
-    public $webUrl;
+    public string $webUrl;
 
 }
