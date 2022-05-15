@@ -7,6 +7,7 @@ namespace Juanparati\Sendinblue;
 /**
  * Class SendinblueSMSProps.
  *
+ * @see: https://developers.sendinblue.com/reference/sendtransacsms
  * @package Juanparati\Sendinblue
  */
 final class SMSModel
@@ -19,7 +20,7 @@ final class SMSModel
      *
      * @var string|int
      */
-    public string|int $sender;
+    public string|int $sender = '';
 
 
     /**
@@ -27,7 +28,7 @@ final class SMSModel
      *
      * @var string
      */
-    public string $recipient;
+    public string $recipient = '';
 
 
     /**
@@ -37,7 +38,7 @@ final class SMSModel
      *
      * @var string
      */
-    public string $content;
+    public string $content = '';
 
 
     /**
@@ -45,22 +46,22 @@ final class SMSModel
      *
      * @var string
      */
-    public string $type;
+    public string $type = 'transactional';
 
 
     /**
      * Message tag.
      *
-     * @var string
+     * @var string|null
      */
-    public string $tag;
+    public ?string $tag;
 
 
     /**
      * Webhook to call for each event triggered by the message
      *
-     * @var string
+     * @var string|null
      */
-    public string $webUrl;
+    public ?string $webUrl;
 
 }

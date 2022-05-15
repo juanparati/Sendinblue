@@ -10,18 +10,18 @@ interface TemplateTransport
     /**
      * SendinblueTemplateTransport constructor.
      *
-     * @param Client $api_client
+     * @param Client $apiClient
      */
-    public function __construct(Client $api_client);
+    public function __construct(Client $apiClient);
 
 
     /**
      * Send the message using the given mailer.
      *
-     * @param  int $template_id
+     * @param int $templateId
      * @param Template $message
      * @return string Message ID
      */
-    public function send(int $template_id, Template $message) : string;
+    public function send(int $templateId, Template $message) : string;
 
 }

@@ -55,9 +55,9 @@ final class TemplateModel
     /**
      * The subject of the message.
      *
-     * @var string
+     * @var string|null
      */
-    public string $subject;
+    public ?string $subject = null;
 
 
     /**

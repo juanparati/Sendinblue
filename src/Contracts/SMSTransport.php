@@ -11,9 +11,9 @@ interface SMSTransport
     /**
      * SendinblueSMSTransport constructor.
      *
-     * @param Client $api_client
+     * @param Client $apiClient
      */
-    public function __construct(Client $api_client);
+    public function __construct(Client $apiClient);
 
 
     /**

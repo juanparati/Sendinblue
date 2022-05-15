@@ -30,11 +30,11 @@ class SMSTransport implements SendinblueSMSTransportContract
     /**
      * SendinblueTemplateTransport constructor.
      *
-     * @param Client $api_client
+     * @param Client $apiClient
      */
-    public function __construct(Client $api_client)
+    public function __construct(Client $apiClient)
     {
-        $this->instance = $api_client->getApi('TransactionalSMSApi');
+        $this->instance = $apiClient->getApi('TransactionalSMSApi');
     }
 
 
