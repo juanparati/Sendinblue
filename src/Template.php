@@ -6,6 +6,8 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Macroable;
 
 use Juanparati\Sendinblue\Contracts\TemplateTransport as TemplateTransportContract;
+use SendinBlue\Client\Api\TransactionalEmailsApi;
+use SendinBlue\Client\ApiException;
 
 
 /**
@@ -34,23 +36,23 @@ class Template
      *
      * @var TemplateModel
      */
-    protected $model;
+    protected TemplateModel $model;
 
 
     /**
      * SendinBlue SMTP instance.
      *
-     * @var \SendinBlue\Client\Api\TransactionalEmailsApi
+     * @var TransactionalEmailsApi
      */
-    protected $instance;
+    protected TransactionalEmailsApi $instance;
 
 
     /**
      * Template transport.
      *
-     * @var TemplateTransport
+     * @var TemplateTransportContract
      */
-    protected $transport;
+    protected TemplateTransportContract $transport;
 
 
     /**
@@ -73,7 +75,7 @@ class Template
      *
      * @return $this
      */
-    public function reset()
+    public function reset(): static
     {
         $this->model = new TemplateModel();
 
@@ -85,11 +87,11 @@ class Template
      * Send the message using the given mailer.
      *
      * @param int $template_id
-     * @param \Closure|string $callable
+     * @param string|\Closure|null $callable
      * @return string The Message ID
      * @throws Exceptions\TransportException
      */
-    public function send($template_id, $callable = null) : string
+    public function send(int $template_id, string|\Closure $callable = null) : string
     {
         if (is_callable($callable))
         {
@@ -105,10 +107,11 @@ class Template
     /**
      * Build the view for the message.
      *
+     * @param $template_id
      * @return array|string
+     * @throws ApiException
      */
-
-    public function buildView($template_id)
+    public function buildView($template_id): array|string
     {
         $template = $this->instance->getSmtpTemplate($template_id);
 
@@ -129,11 +132,11 @@ class Template
     /**
      * Set the sender of the message.
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
+     * @param object|array|string $address
+     * @param string|null $name
      * @return $this
      */
-    public function from($address, $name = null)
+    public function from(object|array|string $address, string $name = null): static
     {
         return $this->setAddress($address, $name, 'from');
     }
@@ -145,7 +148,7 @@ class Template
      * @param  string|null  $name
      * @return bool
      */
-    public function hasFrom($address, $name = null)
+    public function hasFrom($address, $name = null): bool
     {
         return $this->hasRecipient($address, $name, 'from');
     }
@@ -153,11 +156,11 @@ class Template
     /**
      * Set the recipients of the message.
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
+     * @param object|array|string $address
+     * @param string|null $name
      * @return $this
      */
-    public function to($address, $name = null)
+    public function to(object|array|string $address, string $name = null): static
     {
         return $this->setAddress($address, $name, 'to');
     }
@@ -165,11 +168,11 @@ class Template
     /**
      * Determine if the given recipient is set on the mailable.
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
+     * @param object|array|string $address
+     * @param string|null $name
      * @return bool
      */
-    public function hasTo($address, $name = null)
+    public function hasTo(object|array|string $address, ?string $name = null): bool
     {
         return $this->hasRecipient($address, $name, 'to');
     }
@@ -177,11 +180,11 @@ class Template
     /**
      * Set the recipients of the message.
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
+     * @param object|array|string $address
+     * @param string|null $name
      * @return $this
      */
-    public function cc($address, $name = null)
+    public function cc(object|array|string $address, string $name = null): static
     {
         return $this->setAddress($address, $name, 'cc');
     }
@@ -189,11 +192,11 @@ class Template
     /**
      * Determine if the given recipient is set on the mailable.
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
+     * @param object|array|string $address
+     * @param string|null $name
      * @return bool
      */
-    public function hasCc($address, $name = null)
+    public function hasCc(object|array|string $address, string $name = null) : bool
     {
         return $this->hasRecipient($address, $name, 'cc');
     }
@@ -201,11 +204,11 @@ class Template
     /**
      * Set the recipients of the message.
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
+     * @param object|array|string $address
+     * @param string|null $name
      * @return $this
      */
-    public function bcc($address, $name = null)
+    public function bcc(object|array|string $address, string $name = null): static
     {
         return $this->setAddress($address, $name, 'bcc');
     }
@@ -213,11 +216,11 @@ class Template
     /**
      * Determine if the given recipient is set on the mailable.
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
+     * @param object|array|string $address
+     * @param string|null $name
      * @return bool
      */
-    public function hasBcc($address, $name = null)
+    public function hasBcc(object|array|string $address, string $name = null): bool
     {
         return $this->hasRecipient($address, $name, 'bcc');
     }
@@ -225,11 +228,11 @@ class Template
     /**
      * Set the "reply to" address of the message.
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
+     * @param object|array|string $address
+     * @param string|null $name
      * @return $this
      */
-    public function replyTo($address, $name = null)
+    public function replyTo(object|array|string $address, string $name = null) : static
     {
         return $this->setAddress($address, $name, 'replyTo');
     }
@@ -237,11 +240,11 @@ class Template
     /**
      * Determine if the given recipient is set on the mailable.
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
+     * @param object|array|string $address
+     * @param string|null $name
      * @return bool
      */
-    public function hasReplyTo($address, $name = null)
+    public function hasReplyTo(object|array|string $address, string $name = null): bool
     {
         return $this->hasRecipient($address, $name, 'replyTo');
     }
@@ -251,12 +254,12 @@ class Template
      *
      * All recipients are stored internally as [['name' => ?, 'address' => ?]]
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
-     * @param  string  $property
+     * @param object|array|string $address
+     * @param string|null $name
+     * @param string $property
      * @return $this
      */
-    protected function setAddress($address, $name = null, $property = 'to')
+    protected function setAddress(object|array|string $address, string $name = null, string $property = 'to'): static
     {
 
     	if ($property === 'replyTo' || $property === 'from') {
@@ -287,11 +290,11 @@ class Template
     /**
      * Convert the given recipient arguments to an array.
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
+     * @param object|array|string $address
+     * @param string|null $name
      * @return array
      */
-    protected function addressesToArray($address, $name)
+    protected function addressesToArray(object|array|string $address, ?string $name = null): array|object|string
     {
 
         if (! is_array($address) && ! $address instanceof Collection) {
@@ -307,7 +310,7 @@ class Template
      * @param  mixed  $recipient
      * @return object
      */
-    protected function normalizeRecipient($recipient)
+    protected function normalizeRecipient($recipient): object
     {
         if (is_array($recipient)) {
             return (object) $recipient;
@@ -321,12 +324,12 @@ class Template
     /**
      * Determine if the given recipient is set on the mailable.
      *
-     * @param  object|array|string  $address
-     * @param  string|null  $name
-     * @param  string  $property
+     * @param object|array|string $address
+     * @param string|null $name
+     * @param string $property
      * @return bool
      */
-    protected function hasRecipient($address, $name = null, $property = 'to')
+    protected function hasRecipient(object|array|string $address, string $name = null, string $property = 'to'): bool
     {
         $expected = $this->normalizeRecipient(
             $this->addressesToArray($address, $name)[0]
@@ -350,11 +353,11 @@ class Template
     /**
      * Attach a file to the message.
      *
-     * @param  string  $file
+     * @param string $file
      * @param  array  $options
      * @return $this
      */
-    public function attach($file, array $options = [])
+    public function attach(string $file, array $options = []): static
     {
         $this->model->attachments[] = compact('file', 'options');
 
@@ -370,7 +373,7 @@ class Template
      * @param $value
      * @return $this
      */
-    public function attribute($name, $value)
+    public function attribute($name, $value): static
     {
         $this->model->attributes[$name] = $value;
 
@@ -384,7 +387,7 @@ class Template
      * @param array $attributes
      * @return $this
      */
-    public function attributes(array $attributes)
+    public function attributes(array $attributes): static
     {
         $this->model->attributes = $this->model->attributes + $attributes;
 
@@ -398,7 +401,7 @@ class Template
      * @param mixed ...$tag
      * @return $this
      */
-    public function tag(...$tag)
+    public function tag(...$tag): static
     {
         $this->model->tags = array_merge($this->model->tags, $tag);
 
@@ -412,7 +415,7 @@ class Template
      * @param array $file
      * @return $this
      */
-    public function attachURL($file)
+    public function attachURL($file): static
     {
         $this->model->attachmentURL = $file;
 
@@ -425,7 +428,7 @@ class Template
      *
      * @return TemplateModel
      */
-    public function getModel()
+    public function getModel(): TemplateModel
     {
         return $this->model;
     }

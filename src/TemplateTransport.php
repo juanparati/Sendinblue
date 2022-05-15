@@ -3,8 +3,7 @@
 namespace Juanparati\Sendinblue;
 
 
-use Illuminate\Support\Facades\Log;
-
+use SendinBlue\Client\Api\TransactionalEmailsApi;
 use SendinBlue\Client\Model\SendSmtpEmail;
 use SendinBlue\Client\Model\SendSmtpEmailAttachment;
 use SendinBlue\Client\Model\SendSmtpEmailBcc;
@@ -29,35 +28,35 @@ class TemplateTransport implements SendinblueTemplateTransportContract
     /**
      * SendinBlue SMTP instance.
      *
-     * @var \SendinBlue\Client\Api\TransactionalEmailsApi
+     * @var TransactionalEmailsApi
      */
-    protected $instance;
+    protected TransactionalEmailsApi $instance;
 
 
     /**
      * SendinblueTemplateTransport constructor.
      *
-     * @param Client $api_client
+     * @param Client $apiClient
      */
-    public function __construct(Client $api_client)
+    public function __construct(Client $apiClient)
     {
-        $this->instance = $api_client->getApi('TransactionalEmailsApi');
+        $this->instance = $apiClient->getApi('TransactionalEmailsApi');
     }
 
 
     /**
      * Send the message using the given mailer.
      *
-     * @param  int $template_id
+     * @param  int $templateId
      * @param Template $message
      * @return string Message ID
      * @throws TransportException
      */
-    public function send(int $template_id, Template $message) : string
+    public function send(int $templateId, Template $message) : string
     {
 
         $data = $this->mapMessage($message->getModel());
-        $data->setTemplateId($template_id);
+        $data->setTemplateId($templateId);
 
         try
         {
@@ -68,27 +67,27 @@ class TemplateTransport implements SendinblueTemplateTransportContract
             throw new TransportException($e->getMessage());
         }
 
-        $message_id = $response->getMessageId();
+        $messageId = $response->getMessageId();
 
-        if (empty($message_id))
+        if (empty($messageId))
             throw new TransportException('Unable to send e-mail template, due to unknown error');
 
 
-        // Log::debug('Sent Sendinblue template message', ['messageId' => $message_id]);
+        // \Log::debug('Sent Sendinblue template message', ['messageId' => $messageId]);
 
 
-        return $message_id;
+        return $messageId;
     }
 
 
     /**
-     * Transforms Swift_Message into SendinBlue SendSmtpEmail.
+     * Transforms into SendinBlue SendSmtpEmail.
      *
      * @param TemplateModel $message
      * @return SendSmtpEmail
      * @throws TransportException
      */
-    protected function mapMessage(TemplateModel $message)
+    protected function mapMessage(TemplateModel $message): SendSmtpEmail
     {
 
         $mailer = new SendSmtpEmail();

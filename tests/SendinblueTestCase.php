@@ -8,9 +8,9 @@ class SendinblueTestCase extends TestCase
     /**
      * @var string
      */
-    protected $api_key;
+    protected $apiKey;
 
-    protected $sink_recipient;
+    protected $sinkRecipient;
 
 
     protected function setUp(): void
@@ -18,7 +18,7 @@ class SendinblueTestCase extends TestCase
         parent::setUp();
 
         putenv('MAIL_DRIVER=sendinblue.v3');
-        $this->api_key = env('SENDINBLUE_API_KEY');
-        $this->sink_recipient = env('SINK_RECIPIENT');
+        $this->apiKey = env('SENDINBLUE_API_KEY');
+        $this->sinkRecipient = env('SINK_RECIPIENT');
     }
 }

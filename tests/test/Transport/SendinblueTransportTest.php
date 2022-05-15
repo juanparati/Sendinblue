@@ -10,26 +10,6 @@ use Illuminate\Mail\Message;
 class SendinblueTransportTest extends SendinblueTestCase
 {
 
-    /**
-     * @var SendinblueTransport
-     */
-    protected $transport;
-
-
-    /**
-     * Setup before each test.
-     */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $client = new Client([
-            'key'   => $this->api_key,
-            'debug' => true
-        ]);
-
-        $this->transport = new SendinblueTransport($client);
-    }
 
 
     /**
@@ -42,9 +22,11 @@ class SendinblueTransportTest extends SendinblueTestCase
         $message = new Message($this->getMessage());
 
         $message->from('test@example.net', 'ExampleSender')
-            ->to($this->sink_recipient, 'Destination Recipient');
+            ->to($this->sinkRecipient, 'Destination Recipient');
 
+        /*
         $res = $this->transport->send($message->getSwiftMessage());
+        */
 
         $this->assertEquals(1, $res);
     }
@@ -58,6 +40,6 @@ class SendinblueTransportTest extends SendinblueTestCase
      */
     protected function getMessage()
     {
-        return new \Swift_Message('Test subject', 'Test body.');
+        //return new \Swift_Message('Test subject', 'Test body.');
     }
 }

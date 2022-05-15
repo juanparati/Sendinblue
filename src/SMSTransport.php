@@ -3,13 +3,9 @@
 namespace Juanparati\Sendinblue;
 
 
-use Illuminate\Support\Facades\Log;
-
-use SendinBlue\Client\Api\TransactionalSMSApi;
-use SendinBlue\Client\ApiClient;
-
 use Juanparati\Sendinblue\Exceptions\TransportException;
 use Juanparati\Sendinblue\Contracts\SMSTransport as SendinblueSMSTransportContract;
+use SendinBlue\Client\Api\TransactionalSMSApi;
 use SendinBlue\Client\Model\SendTransacSms;
 
 
@@ -28,17 +24,17 @@ class SMSTransport implements SendinblueSMSTransportContract
      *
      * @var \SendinBlue\Client\Api\TransactionalSMSApi
      */
-    protected $instance;
+    protected TransactionalSMSApi $instance;
 
 
     /**
      * SendinblueTemplateTransport constructor.
      *
-     * @param Client $api_client
+     * @param Client $apiClient
      */
-    public function __construct(Client $api_client)
+    public function __construct(Client $apiClient)
     {
-        $this->instance = $api_client->getApi('TransactionalSMSApi');
+        $this->instance = $apiClient->getApi('TransactionalSMSApi');
     }
 
 
@@ -62,15 +58,12 @@ class SMSTransport implements SendinblueSMSTransportContract
             throw new TransportException($e->getMessage());
         }
 
-
         $message_id = $response->getMessageId();
 
         if (empty($message_id))
             throw new TransportException('Unable to send SMS, due to unknown error');
 
-
         // Log::debug('Sent Sendinblue SMS', ['messageId' => $message_id]);
-
 
         return $message_id;
     }
@@ -83,7 +76,7 @@ class SMSTransport implements SendinblueSMSTransportContract
      * @return SendTransacSms
      * @throws TransportException
      */
-    protected function mapMessage(SMSModel $message)
+    protected function mapMessage(SMSModel $message): SendTransacSms
     {
 
         $sms = new SendTransacSms();

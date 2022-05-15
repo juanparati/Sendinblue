@@ -17,7 +17,7 @@ final class TemplateModel
      *
      * @var array
      */
-    public $from = [];
+    public array $from = [];
 
 
     /**
@@ -25,7 +25,7 @@ final class TemplateModel
      *
      * @var array
      */
-    public $to = [];
+    public array $to = [];
 
 
     /**
@@ -33,7 +33,7 @@ final class TemplateModel
      *
      * @var array
      */
-    public $cc = [];
+    public array $cc = [];
 
 
     /**
@@ -41,7 +41,7 @@ final class TemplateModel
      *
      * @var array
      */
-    public $bcc = [];
+    public array $bcc = [];
 
 
     /**
@@ -49,15 +49,15 @@ final class TemplateModel
      *
      * @var array
      */
-    public $replyTo = [];
+    public array $replyTo = [];
 
 
     /**
      * The subject of the message.
      *
-     * @var string
+     * @var string|null
      */
-    public $subject;
+    public ?string $subject = null;
 
 
     /**
@@ -65,7 +65,7 @@ final class TemplateModel
      *
      * @var array
      */
-    public $attachments = [];
+    public array $attachments = [];
 
 
     /**
@@ -73,7 +73,7 @@ final class TemplateModel
      *
      * @var array
      */
-    public $attachmentsURL = [];
+    public array $attachmentsURL = [];
 
 
     /**
@@ -81,7 +81,7 @@ final class TemplateModel
      *
      * @var array
      */
-    public $attributes = [];
+    public array $attributes = [];
 
 
     /**
@@ -89,7 +89,7 @@ final class TemplateModel
      *
      * @var array
      */
-    public $tags = [];
+    public array $tags = [];
 
 
     /**
@@ -97,7 +97,7 @@ final class TemplateModel
      *
      * @var array
      */
-    public $callbacks = [];
+    public array $callbacks = [];
 
 
 }

@@ -5,6 +5,7 @@ namespace Juanparati\Sendinblue;
 
 use SendinBlue\Client\Configuration;
 use GuzzleHttp\Client as HTTPClient;
+use SendinBlue\Client\Model\ModelInterface;
 
 /**
  * Class Client.
@@ -19,12 +20,20 @@ class Client
     /**
      * @var Configuration
      */
-    protected $config;
+    protected Configuration $config;
 
 
-    protected $client;
+    /**
+     * @var HTTPClient
+     */
+    protected HTTPClient $client;
 
 
+    /**
+     * Constructor.
+     *
+     * @param $config
+     */
     public function __construct($config)
     {
         $http_client_options = [];
@@ -50,9 +59,10 @@ class Client
     /**
      * Return the API client.
      *
-     * @return array
+     * @param string $api
+     * @return mixed
      */
-    public function getApi($api)
+    public function getApi(string $api): mixed
     {
         $api = 'SendinBlue\\Client\\Api\\' . $api;
         return new $api($this->client, $this->config);
@@ -61,9 +71,11 @@ class Client
     /**
      * Return the Model.
      *
-     * @return array
+     * @param string $model
+     * @param array $data
+     * @return ModelInterface
      */
-    public function getModel($model, $data = [])
+    public function getModel(string $model, array $data = []): ModelInterface
     {
         $api = 'SendinBlue\\Client\\Model\\' . $model;
         return new $api($data);
@@ -75,7 +87,7 @@ class Client
      *
      * @return Configuration
      */
-    public function getConfig()
+    public function getConfig(): Configuration
     {
         return $this->config;
     }
@@ -86,7 +98,7 @@ class Client
      *
      * @return HTTPClient
      */
-    public function getClient()
+    public function getClient(): HTTPClient
     {
         return $this->client;
     }

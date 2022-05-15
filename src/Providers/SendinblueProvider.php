@@ -1,16 +1,23 @@
 <?php
 
-namespace Juanparati\Sendinblue;
+namespace Juanparati\Sendinblue\Providers;
 
-use Illuminate\Mail\MailManager;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
+use Juanparati\Sendinblue\Client;
+use Juanparati\Sendinblue\SMS;
+use Juanparati\Sendinblue\SMSTransport;
+use Juanparati\Sendinblue\Template;
+use Juanparati\Sendinblue\TemplateTransport;
+use Symfony\Component\Mailer\Bridge\Sendinblue\Transport\SendinblueTransportFactory;
+use Symfony\Component\Mailer\Transport\Dsn;
 
 /**
  * Class ServiceProvider.
  *
  * @package Juanparati\Sendinblue
  */
-class ServiceProvider extends LaravelServiceProvider
+class SendinblueProvider extends LaravelServiceProvider
 {
 
     /**
@@ -18,11 +25,16 @@ class ServiceProvider extends LaravelServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        // Boot as swift transport
-        $this->app[MailManager::class]->extend('sendinblue.v3', function ($app) {
-            return new Transport($this->app->make(Client::class));
+        Mail::extend('sendinblue.v3', function () {
+            return (new SendinblueTransportFactory())->create(
+                new Dsn(
+                    'sendinblue+api',
+                    'default',
+                    $this->app['config']['services.sendinblue.v3.key'],
+                )
+            );
         });
     }
 
@@ -32,7 +44,7 @@ class ServiceProvider extends LaravelServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
 
         // Register Sendinblue API client
@@ -61,5 +73,13 @@ class ServiceProvider extends LaravelServiceProvider
 
         $this->app->alias(SMS::class, 'Sendinblue' . class_basename(SMS::class));
 
+    }
+
+    /**
+     * @return array
+     */
+    public function provides(): array
+    {
+        return ['sendinblue.v3'];
     }
 }

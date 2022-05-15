@@ -6,7 +6,6 @@ use Illuminate\Support\Traits\Macroable;
 
 use Juanparati\Sendinblue\Contracts\SMSTransport as SMSTransportContract;
 use Juanparati\Sendinblue\Exceptions\SMSException;
-use PHPUnit\Runner\Exception;
 
 
 /**
@@ -27,7 +26,7 @@ class SMS
      *
      * @var SMSModel
      */
-    protected $model;
+    protected SMSModel $model;
 
 
     /**
@@ -35,7 +34,7 @@ class SMS
      *
      * @var SMSTransportContract
      */
-    protected $transport;
+    protected SMSTransportContract $transport;
 
 
     /**
@@ -56,7 +55,7 @@ class SMS
      *
      * @return $this
      */
-    public function reset()
+    public function reset(): static
     {
         $this->model = new SMSModel();
 
@@ -70,16 +69,16 @@ class SMS
      * @param null $callable
      * @return int
      */
-    public function send($callable = null)
+    public function send($callable = null): int
     {
         if (is_callable($callable))
         {
             $instance = app()->make(static::class);
             call_user_func($callable, $instance);
-            $instance->send();
+            return $instance->send();
         }
-        else
-            return $this->transport->send($this);
+
+        return $this->transport->send($this);
     }
 
 
@@ -90,7 +89,7 @@ class SMS
      * @param string $mobile
      * @return $this
      */
-    public function to($mobile)
+    public function to($mobile): static
     {
         $this->model->recipient = $mobile;
 
@@ -105,12 +104,15 @@ class SMS
      * @return $this
      * @throws SMSException
      */
-    public function sender($sender)
+    public function sender(string|int $sender): static
     {
         // Remove all kind of spaces.
         $sender = preg_replace('/\s+/', '', $sender);
 
-        if (strlen($sender) > 11)
+        if (strlen($sender) > 15)
+            throw new SMSException('Sender number length is higher than 15 characters.');
+
+        if (!is_numeric($sender) && strlen($sender) > 11)
             throw new SMSException('Sender name length is higher than 11 characters.');
 
         if (preg_match('/[^a-zA-Z\d]/', $sender))
@@ -128,7 +130,7 @@ class SMS
      * @param $content
      * @return $this
      */
-    public function message($content)
+    public function message($content): static
     {
         $this->model->content = $content;
 
@@ -142,7 +144,7 @@ class SMS
      * @param $type
      * @return $this
      */
-    public function type($type)
+    public function type($type): static
     {
         $this->model->type = $type;
 
@@ -156,7 +158,7 @@ class SMS
      * @param $tag
      * @return $this
      */
-    public function tag($tag)
+    public function tag($tag): static
     {
         $this->model->tag = $tag;
 
@@ -170,7 +172,7 @@ class SMS
      * @param $web_url
      * @return $this
      */
-    public function webUrl($web_url)
+    public function webUrl($web_url): static
     {
         $this->model->webUrl = $web_url;
 
@@ -183,7 +185,7 @@ class SMS
      *
      * @return SMSModel
      */
-    public function getModel()
+    public function getModel(): SMSModel
     {
         return $this->model;
     }
