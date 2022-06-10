@@ -54,7 +54,7 @@ final class SMSModel
      *
      * @var string|null
      */
-    public ?string $tag;
+    public ?string $tag = null;
 
 
     /**
@@ -62,6 +62,6 @@ final class SMSModel
      *
      * @var string|null
      */
-    public ?string $webUrl;
+    public ?string $webUrl = null;
 
 }
