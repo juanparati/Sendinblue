@@ -11,6 +11,10 @@ A Laravel package that provides transactional features like:
 
 ## Installation
 
+For Laravel 10.x
+
+      composer require juanparati/sendinblue "^10.0"
+
 For Laravel 9.x
 
       composer require juanparati/sendinblue "^9.0"
