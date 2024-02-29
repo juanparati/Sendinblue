@@ -8,6 +8,11 @@ A Laravel package that provides transactional features like:
 - Transactional template transport
 - Transactional SMS transport
 
+## Note
+
+Sendinblue changed the name to Brevo.
+For new Laravel 10+ installations please use the [Brevo Suite library for Laravel](https://github.com/juanparati/BrevoSuite).
+
 
 ## Installation
 
